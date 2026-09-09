@@ -1,8 +1,14 @@
 package com.base_class;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.Date;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -81,6 +87,28 @@ public class Base_Class {
 		public static void back() {
 			driver.navigate().back();
 		}
-		
+		public static String captureScreenshot(String scenarioName) {
+			try {
+			TakesScreenshot ts = (TakesScreenshot) driver;
+			File source = ts.getScreenshotAs(OutputType.FILE);
+			String safeName = scenarioName.replaceAll("[^a-zA-Z0-9_-]", "_");
+			String timestamp = new SimpleDateFormat("yyyymmdd_HHmmss").format(new Date());
+			String fileName = safeName + "_" + timestamp + ".png";
+			String folderPath = System.getProperty("user.dir") + File.separator + "target" + File.separator
+			+ "screenshot" + File.separator + "failed" + File.separator;
+			File folder = new File(folderPath);
+			if (!folder.exists()) {
+			folder.mkdirs();
+			}
+			File destination = new File(folderPath + fileName);
+			FileUtils.copyFile(source, destination);
+			System.out.println("Screenshot saved :" + destination.getAbsolutePath());
+			return destination.getAbsolutePath();
+			 
+			} catch (Exception e) {
+			System.out.println("Screenshot capture failed : " + e.getMessage());
+			return null;
+			}
+			}
 
 }

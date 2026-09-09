@@ -30,11 +30,12 @@ public class Step_Definition extends Base_Class {
 
 	@When("User clicks on click here button")
 	public void user_clicks_on_click_here_button() {
-		List<WebElement> beforeText = cal.beforeText;
+	    List<WebElement> beforeText = cal.beforeText;
 		for(WebElement x:beforeText) {
 	    	String text = x.getText();
 	    	bftext.add(text);
 	    }
+		Assert.assertTrue(cal.button.isEnabled());
 		click(cal.button);
 		
 		}
@@ -67,7 +68,7 @@ public class Step_Definition extends Base_Class {
 
 	@Then("User validate checkbox is enable")
 	public void user_validate_checkbox_is_enable() {
-	   
+	  
 	}
 
 	@When("User clicks on the check box")
