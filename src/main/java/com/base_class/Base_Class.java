@@ -42,7 +42,6 @@ public class Base_Class {
 		public static String getUrl() {
 			return driver.getCurrentUrl();
 		}
-
 		public static String getTitle() {
 			return driver.getTitle();
 		}
